@@ -1,8 +1,8 @@
 <?php
-include('includes/header.php');
-include('includes/sidebar.php');
-include('includes/content-top.php');
-include('includes/content.php');
-include('includes/widget.php');
-include('includes/footer.php');
+require_once('includes/header.php');
+require_once('includes/sidebar.php');
+require_once('includes/content-top.php');
+require_once('includes/content.php');
+require_once('includes/widget.php');
+require_once('includes/footer.php');
 ?>
