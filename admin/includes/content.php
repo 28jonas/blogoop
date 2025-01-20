@@ -2,11 +2,6 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-	            <?php
-	                if($database ->connection){
-						echo "ok connectie gemaakt met de database";
-	                }
-	            ?>
                 <h4>Profile Visit</h4>
             </div>
             <div class="card-body">
