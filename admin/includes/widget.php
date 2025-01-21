@@ -10,6 +10,7 @@
                     <h5 class="font-bold">John Duck</h5>
                     <h6 class="text-muted mb-0">@johnducky</h6>
                 </div>
+	            <a href="../logout.php" class="text-danger display-3 text-center font-bold"><i class="bi bi-power"></i></a>
             </div>
         </div>
     </div>

@@ -48,8 +48,6 @@
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
-
-
                 </li>
                 <li
                     class="sidebar-item  has-sub">
@@ -62,7 +60,7 @@
                             <a href="users.php" class="submenu-link">All User</a>
                         </li>
 	                    <li class="submenu-item  ">
-		                    <a href="#" class="submenu-link">Add User</a>
+		                    <a href="posts.php" class="submenu-link">All posts</a>
 	                    </li>
                     </ul>
 

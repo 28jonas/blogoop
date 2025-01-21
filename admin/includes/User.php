@@ -43,4 +43,20 @@ class User
         return !empty($result) ? array_shift($result): false;
     }
 
+    public static function verify_user($username, $password){
+    global $database;
+        $username = $database->escape_string($username);
+        $password = $database->escape_string($password);
+
+        /*select * from users where username = $username and password = $password*/
+        $sql = "SELECT * FROM users WHERE ";
+        $sql .= "username= ? ";
+        $sql .= "AND password= ? ";
+        $sql .= "LIMIT 1";
+
+        $the_result_array = self::find_this_query($sql, [$username, $password]);
+
+        return !empty($the_result_array) ? array_shift($the_result_array): false;
+    }
+
 }
