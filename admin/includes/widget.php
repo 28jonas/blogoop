@@ -1,3 +1,6 @@
+<?php
+	$user = $session ->get_logged_in_user();
+?>
 </div>
 <div class="col-12 col-lg-3">
     <div class="card">
@@ -7,8 +10,9 @@
                     <img src="./assets/compiled/jpg/1.jpg" alt="Face 1">
                 </div>
                 <div class="ms-3 name">
-                    <h5 class="font-bold">John Duck</h5>
-                    <h6 class="text-muted mb-0">@johnducky</h6>
+                    <h5 class="font-bold" content="username"><?php echo $user->first_name . " " . $user->last_name; ?></h5>
+                    <h6 class="text-muted mb-0">@<?php echo $user->username ?></h6>
+
                 </div>
 	            <a href="../logout.php" class="text-danger display-3 text-center font-bold"><i class="bi bi-power"></i></a>
             </div>

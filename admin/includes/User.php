@@ -9,7 +9,9 @@ class User
     public $password;
     public $first_name;
     public $last_name;
-    //methods
+
+
+    //methods login
     public static function find_this_query($sql, $values = []){
         global $database;
         $result = $database->query($sql,$values);
@@ -35,8 +37,9 @@ class User
     }
 
     public static function find_all_users(){
-        return self::find_this_query("SELECT * FROM users");
+        return self::find_this_query("SELECT * FROM users ORDER BY id DESC");
     }
+
     public static function find_user_by_id($user_id){
         //binden van parameters= ($user_id)=PREPARED STATEMENTS
         $result = self::find_this_query("SELECT * FROM users WHERE id=?",[$user_id]);
@@ -57,6 +60,112 @@ class User
         $the_result_array = self::find_this_query($sql, [$username, $password]);
 
         return !empty($the_result_array) ? array_shift($the_result_array): false;
+    }
+
+    /*crud*/
+    protected static $table_name = 'users';
+    /*properties als array voorzien*/
+    public function get_properties(){
+        return[
+            'id' => $this -> id,
+            'username' => $this -> username,
+            'password' => $this -> password,
+            'first_name' => $this -> first_name,
+            'last_name' => $this -> last_name
+        ];
+
+    }
+
+    public function create(){
+        global $database;
+        /*tabelnaam ophalen*/
+        $table = static::$table_name;
+        /*properties*/
+        $properties = $this->get_properties();
+        /*verwijder de id uit de lijst van properties*/
+        if(array_key_exists('id', $properties)){
+            unset($properties['id']);
+        };
+
+        /*waarden beschermen tegen sql injecties*/
+        $escaped_values = array_map([$database, 'escape_string'], $properties);
+
+        /*placeholders in prepared statements (?)*/
+        $placeholders =array_fill(0, count($properties), "?");
+
+        /*String van alle veldnamen gescheiden door komma's*/
+        $fields_string = implode(',', array_keys($properties));
+
+        /*datatypes string*/
+        $types_string = "";
+        foreach($properties as $value){
+            if(is_int($value)){
+                $types_string .= "i";
+
+            }elseif(is_float($value)){
+                $types_string .= "d";
+            }else{
+                $types_string .= "s";
+            }
+        }
+
+        /*een volledig prepared sql statement*/
+        $sql = "INSERT INTO $table ($fields_string) VALUES (".implode(',',$placeholders).")";
+
+        /*excecute*/
+        $database->query($sql, $escaped_values);
+    }
+
+    public function update(){
+        global $database;
+        //tabelnaam ophalen
+        $table = static::$table_name;
+        //properties
+        $properties = $this->get_properties();
+        unset($properties['id']);
+        //waarden beschermen tegen sql injecties
+        $escaped_values = array_map([$database,'escape_string'], $properties);
+
+        //append the id value tot the end of the escaped values array
+        $escaped_values[]= $this->id;
+        $placeholders = array_fill(0,count($properties), '?');
+
+        //een string van alle veldnamen gescheiden door komma's.
+        $fields_string = implode(',',array_keys($properties));
+        //datatypes string
+        $types_string = "";
+        foreach($properties as $value){
+            if(is_int($value)){
+                $types_string .= "i";
+            }elseif(is_float($value)){
+                $types_string .= "d";
+            }else{
+                $types_string .= "s";
+            }
+        }
+        //create sql commando, prepared statement (? welk id)
+        //$properties=['username',...,'last-name]
+        // username = ?, ... last-name = ?
+
+        $sql = "UPDATE $table SET " . implode(', ', array_map(fn($field) => "$field = ?", array_keys($properties))) . " WHERE id = ?";
+
+        //array_map met fn($field) => "$field = ?":
+        //
+        //Hiermee wordt voor elk veld een correcte field = ?-toewijzing gemaakt.
+        //Bijv.: username = ?, password = ?, first_name = ?, last_name = ?.
+
+        //execute
+        $database->query($sql,$escaped_values);
+    }
+
+    public function delete(){
+        global $database;
+        $table = static::$table_name;
+        $escaped_id = $database->escape_string($this->id);
+
+        $sql = "DELETE FROM $table WHERE id = ?";
+        $params = [$escaped_id];
+        $database->query($sql,$params);
     }
 
 }

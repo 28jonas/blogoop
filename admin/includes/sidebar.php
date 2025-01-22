@@ -58,10 +58,16 @@
                     <ul class="submenu ">
                         <li class="submenu-item  ">
                             <a href="users.php" class="submenu-link">All User</a>
+                        </li><li class="submenu-item  ">
+                            <a href="add-user.php" class="submenu-link">Add User</a>
                         </li>
+	                    <li class="submenu-item  ">
+		                    <a href="update-user.php" class="submenu-link">Update User</a>
+	                    </li>
 	                    <li class="submenu-item  ">
 		                    <a href="posts.php" class="submenu-link">All posts</a>
 	                    </li>
+
                     </ul>
 
 
