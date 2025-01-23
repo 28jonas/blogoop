@@ -9,19 +9,30 @@ if(isset($_SESSION['the_message'])){
     unset($_SESSION['the_message']);
 }
 if(isset($_POST['submit'])){
-    $user = new User();
-    $user->username = $_POST['username'];
-    $user->first_name = $_POST['first_name'];
-    $user->last_name = $_POST['last_name'];
-    $user->password = $_POST['password'];
+	$validation = new Validation();
 
-    $user->create();
+	if($validation->validation_username($_POST['username'], $errors)){
+		if($validation->validation_password($_POST['password'], $errors)){
+            $user = new User();
+            $user->username = $_POST['username'];
+            $user->first_name = $_POST['first_name'];
+            $user->last_name = $_POST['last_name'];
+            $user->password = $_POST['password'];
 
-    if(!empty($user)){
+            $user->create();
+            $the_message = "New user: ". $user-> first_name . " " . $user->last_name . " has been created! and your password is strong enough!";
+		} else{
+			$the_message = "Your password is invalid! It is to short or it has not an special character!";
+		}
+	}else{
+		$the_message = "Invalid username. Must be at least 3 characters long and have only letters or numbers." ;
+	}
+
+    /*if(!empty($user)){
         $the_message = "New user: ".$user->first_name." ".$user->last_name." created!";
     }else{
         $the_message = "User could not be added";
-    }
+    }*/
 
     /*Zet boodschap in de sessie voor gebruik na redirect*/
     $_SESSION['the_message'] = $the_message;
@@ -54,7 +65,7 @@ if(isset($_POST['submit'])){
                                     <label for="first-name-icon">Username</label>
                                     <div class="position-relative">
                                         <input type="text" class="form-control"
-                                               placeholder="Typ your username" id="first-name-icon" name="username">
+                                               placeholder="Typ your username" id="first-name-icon" name="username" required>
                                         <div class="form-control-icon">
                                             <i class="bi bi-person"></i>
                                         </div>
