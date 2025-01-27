@@ -18,7 +18,7 @@ class Session
 
     public function get_logged_in_user(){
         if($this->user_id){
-            return User::find_user_by_id($this->user_id) ;
+            return User::find_by_id($this->user_id) ;
         }
         return null;
     }

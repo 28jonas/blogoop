@@ -27,8 +27,10 @@ class Database
     }
 
     public function escape_string($string){
-        $escaped_string = $this -> connection -> real_escape_string($string);
-        return $escaped_string;
+        if($string === null){
+            return "NULL";
+        }
+        return $this -> connection -> real_escape_string($string);
     }
 
     public function query($sql, $params = []) {

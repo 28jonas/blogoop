@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
     $user->last_name = $_POST['last_name'];
     $user->password = $_POST['password'];
 
-    $user->create();
+    $user->save();
 
     if(!empty($user)){
         $the_message = "New user: ".$user->first_name." ".$user->last_name." created!";

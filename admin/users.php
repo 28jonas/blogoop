@@ -5,7 +5,7 @@ require_once("includes/content-top.php");
 
 if(isset($_GET['delete'])){
 	$user_id = $_GET['delete'];
-	$user = User::find_user_by_id($user_id);
+	$user = User::find_by_id($user_id);
 	if($user){
 		$user->delete();
 		header("Location: users.php").
@@ -36,7 +36,7 @@ if(isset($_GET['delete'])){
 					</tr>
 					</thead>
 					<tbody>
-                    <?php $users = User::find_all_users(); ?>
+                    <?php $users = User::find_all(); ?>
                     <?php foreach($users as $user):?>
 						<tr>
 							<td><?= $user->id; ?></td>
@@ -56,6 +56,9 @@ if(isset($_GET['delete'])){
                     <?php endforeach;?>
 					</tbody>
 				</table>
+				<?php
+					echo INCLUDES_PATH;
+					?>
 			</div>
 		</div>
 	</section>

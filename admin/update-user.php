@@ -7,14 +7,14 @@ if(empty($_GET['id'])){
     header("Location: users.php");
 }
 
-$user = USER::find_user_by_id($_GET['id']);
+$user = USER::find_by_id($_GET['id']);
 
 if(isset($_POST['updateUser'])){
     if($user){
         $user->username = $_POST['username'];
         $user->first_name = $_POST['first_name'];
         $user->last_name = $_POST['last_name'];
-        $user->update();
+        $user->save();
         header("Location: users.php");
     }
 }
