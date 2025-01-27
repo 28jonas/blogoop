@@ -9,6 +9,8 @@ class User extends Db_object
     public $password;
     public $first_name;
     public $last_name;
+    public $created_at;
+    public $deleted_at;
 
     protected static $table_name = 'users';
 
