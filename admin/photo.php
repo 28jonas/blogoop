@@ -13,7 +13,7 @@ require_once("includes/content-top.php");
 					<div class="card-body">
 						<div class="row gallery">
                             <?php
-                            $photos = Photo::find_all();
+                            $photos = Photo::sort_by_userid();
                             ?>
                             <?php foreach ($photos as $photo): ?>
 								<div class="col-6 col-sm-6 col-lg-3 p-2">

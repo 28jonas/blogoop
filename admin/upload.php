@@ -10,6 +10,7 @@ $photo = new Photo();
 //hier gebeurd het opladen fysisch van de photo naar de server
 if (isset($_POST['submit'])) {
     $photo->title = $_POST['title'];
+	$photo->user_id = $session->user_id;
     $photo->description = $_POST['description'];
 	$photo->alt_text = $_POST['alt_text'];
     $photo->set_file($_FILES['file']);

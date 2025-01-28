@@ -132,7 +132,8 @@ class Photo extends Db_object
         }
     }
 
-    public static function sort_by_userid(){
+    public static function sort_by_userid()
+    {
         global $session;
         return static::find_this_query("SELECT * FROM photos where user_id={$session->user_id}");
     }
