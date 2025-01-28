@@ -771,7 +771,11 @@
     
     
     <script src="assets/compiled/js/app.js"></script>
+    
 
+    
+<script src="assets/extensions/tinymce/tinymce.min.js"></script>
+<script src="assets/static/js/pages/tinymce.js"></script>
 
 </body>
 

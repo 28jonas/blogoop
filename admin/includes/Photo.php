@@ -9,6 +9,7 @@ class Photo extends Db_object
     public $filename;
     public $size;
     public $type;
+    public $alt_text;
 
     public $tmp_path;
     public $upload_directory = "assets/images/photos";
@@ -44,7 +45,8 @@ class Photo extends Db_object
             'description'=>$this->description,
             'filename'=>$this->filename,
             'size'=>$this->size,
-            'type'=>$this->type
+            'type'=>$this->type,
+            'alt_text' => $this->alt_text,
         ];
     }
     public function set_file($file){
@@ -65,40 +67,66 @@ class Photo extends Db_object
             return true;
         }
     }
-    public function save(){
-        $target_path = SITE_ROOT.DS.'admin'.DS.$this->upload_directory.DS.$this->filename;
+    public function save() {
+        $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
 
-        if($this->id){
-            $this->update();
-            if(move_uploaded_file($this->tmp_path,$target_path)){
-                if($this->create()){//aanmaken in de database
+        // Als het Photo-object al een ID heeft, wordt dit beschouwd als een update.
+        if ($this->id) {
+            // Controleer of er een tijdelijk bestandspad aanwezig is (nieuw bestand).
+            if (!empty($this->tmp_path)) {
+                // Het nieuwe bestand wordt verplaatst naar de juiste locatie en opgeslagen.
+                if (move_uploaded_file($this->tmp_path, $target_path)) {
+                    $this->update(); // Update database
+                    unset($this->tmp_path);// Het tijdelijke pad wordt verwijderd.
+                    return true;
+                } else {
+                    $this->errors[] = "Failed to move the file.";
+                    return false;
+                }
+            } else {
+                //update met een leeg bestand, dus geen bestand meegegeven
+                return $this->update(); // Alleen database bijwerken
+            }
+        } else { // Nieuw bestand uploaden
+            if (!empty($this->errors)) {
+                return false;
+            }
+            if (empty($this->filename) || empty($this->tmp_path)) {
+                $this->errors[] = "The file is not available.";
+                return false;
+            }
+            if (file_exists($target_path)) {
+                $this->errors[] = "The file {$this->filename} already exists.";
+                return false;
+            }
+            if (move_uploaded_file($this->tmp_path, $target_path)) {
+                if ($this->create()) { // Database-insert
                     unset($this->tmp_path);
                     return true;
                 }
+            } else {
+                $this->errors[] = "This folder does not have write permissions.";
+                return false;
             }
+        }
+    }
+
+    // Deze methode verwijdert de oude afbeelding fysiek van de server.
+    // Dit gebeurt alleen als er een bestand is gekoppeld aan het Photo-object.
+    public function update_photo() {
+        if (!empty($this->filename)) {
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+            if (file_exists($target_path)) {
+                unlink($target_path); // Verwijder de oude afbeelding fysiek
+            }
+        }
+    }
+
+    public function picture_path(){
+        if($this-> filename && file_exists($this->upload_directory.DS.$this->filename)){
+            return $this->upload_directory.DS.$this->filename;
         }else{
-            if(!empty($this->errors)){
-                return false;
-            }
-            if(empty($this->filename) || empty($this->tmp_path)){
-                $this->errors[]="File not available";
-                return false;
-            }
-            if(file_exists($target_path)){
-                $this->errors[]= "File {$this->filename} EXISTS!";
-                return false;
-            }
-            if(move_uploaded_file($this->tmp_path, $target_path)){
-                //uploaden in de images map
-                if($this->create()){
-                    unset($this->tmp_path);
-                    return true;
-                }
-            }else{
-                $this->errors[]= "This folder has no write rights";
-                return false;
-            }
-
+            return 'https://placehold.co/300';
         }
     }
 

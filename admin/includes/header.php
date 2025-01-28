@@ -19,6 +19,8 @@ ob_start();
     <link rel="stylesheet" href="./assets/compiled/css/app.css">
     <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
     <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+	<link rel="stylesheet" href="./assets/css/lightbox.css">
+
 </head>
 
 <body>

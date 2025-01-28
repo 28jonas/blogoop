@@ -130,33 +130,6 @@ if(isset($_GET['delete'])){
 		</div>
 	</section>
 
-<script>
-    // Selecteer de nav-tabs en de tabel
-    const navTabs = document.querySelectorAll('.nav-tabs li');
-    const table = document.getElementById('table1');
-
-    // Voeg een event listener toe aan de nav-tabs
-    navTabs.forEach((tab) => {
-        tab.addEventListener('click', (e) => {
-            // Haal de actieve status op van de geklikte tab
-            const isActive = e.target.textContent === 'Active';
-
-            // Filter de tabel op basis van de actieve status
-            const rows = table.rows;
-            rows.forEach((row) => {
-                const deletedAt = row.cells[6].textContent; // Kolom 6 is de deleted_at kolom
-                if (isActive && deletedAt !== '') {
-                    row.style.display = 'none';
-                } else if (!isActive && deletedAt === '') {
-                    row.style.display = 'none';
-                } else {
-                    row.style.display = '';
-                }
-            });
-        });
-    });
-</script>
-
 <?php
 require_once("includes/widget.php");
 require_once("includes/footer.php");
