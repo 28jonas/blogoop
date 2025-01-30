@@ -15,6 +15,18 @@ if(isset($_GET['delete'])){
 	}
 }
 
+if(isset($_GET['restore'])){
+    $user_id = $_GET['restore'];
+    $blog = Blog::find_by_id($user_id);
+    if($user){
+        $user->restore();
+        header("Location: user.php").
+        exit;
+    }else{
+        echo "User not found";
+    }
+}
+
 ?>
 	<section class="section">
 		<div class="card">

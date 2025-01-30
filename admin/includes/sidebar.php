@@ -71,22 +71,9 @@
 						<li class="submenu-item  ">
 							<a href="posts.php" class="submenu-link">All posts</a>
 						</li>
-						<li
-								class="sidebar-item  ">
-							<a href="application-gallery.html" class='sidebar-link'>
-								<i class="bi bi-image-fill"></i>
-								<span>Photo Gallery</span>
-							</a>
-
-
-						</li>
-
 					</ul>
-
-
 				</li>
-				<li
-						class="sidebar-item  has-sub">
+				<li class="sidebar-item  has-sub">
 					<a href="#" class='sidebar-link'>
 						<i class="bi bi-film"></i>
 						<span>Photos</span>
@@ -99,8 +86,37 @@
 							<a href="upload.php" class="submenu-link">Upload photo</a>
 						</li>
 				</li>
+
+
 			</ul>
+
+			<li
+					class="sidebar-item  has-sub">
+				<a href="#" class='sidebar-link'>
+					<i class="bi bi-collection-fill"></i>
+					<span>Blogs</span>
+				</a>
+
+				<ul class="submenu ">
+
+					<li class="submenu-item  ">
+						<a href="blog.php" class="submenu-link">All blog posts
+						</a>
+					</li>
+					<li class="submenu-item  ">
+						<a href="blog-admin.php" class="submenu-link">Blog admin
+						</a>
+					</li>
+					<li class="submenu-item  ">
+						<a href="add-blog.php" class="submenu-link">Add blog post
+						</a>
+					</li>
+
+				</ul>
+
+
 			</li>
+
 			<li
 					class="sidebar-item  has-sub">
 				<a href="#" class='sidebar-link'>

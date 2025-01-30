@@ -149,6 +149,18 @@ class Db_object
         }
     }
 
+    public function restore(){
+        global $database;
+        $table = static::$table_name;
+        $escaped_id = $database->escape_string($this->id);
+        $current_timestamp = date('Y_m_d_H_i_s');
+
+        /*Wissen in de database*/
+        $sql = "UPDATE $table SET deleted_at = NULL WHERE id = ?";
+        $params = [$escaped_id];
+        $database->query($sql,$params);
+    }
+
     public function save(){
         return isset($this->id) ? $this -> update() : $this-> create();
     }

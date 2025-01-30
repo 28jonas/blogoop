@@ -28,7 +28,7 @@ require_once("includes/content-top.php");
 									<img class="img-fluid w-100" src="<?= $photo->picture_path(); ?>" alt="Card image cap">
 								</div>
 								<div class="card-footer d-flex justify-content-between">
-									<span><?= $blogs->created_at ?></span>
+									<span><?= $blogs->created_at ?> ></span>
 									<button class="btn btn-light-primary">Read More</button>
 								</div>
 							</div>

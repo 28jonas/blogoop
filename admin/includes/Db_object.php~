@@ -27,11 +27,9 @@ class Db_object
         return array_key_exists($the_attribute, $object_properties);
     }
 
-    public static function find_all($sql=""){
-        if(empty($sql)){
-            $sql = "SELECT * FROM ".static::$table_name." ORDER BY id DESC";
-        }
-        return static::find_this_query($sql);
+    public static function find_all(){
+        return static::find_this_query("SELECT * FROM ".static::$table_name." ORDER BY id DESC");
+        /*return static::find_this_query("SELECT * FROM ".static::$table_name." deleted_at is NULL WHERE deleted_at = '0000-00-00 00:00:00'  ORDER BY id DESC");*/
     }
 
     public static function find_by_id($id){
